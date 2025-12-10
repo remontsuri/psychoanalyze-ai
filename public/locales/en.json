@@ -1,0 +1,23 @@
+{
+  "title": "PsychoAnalyze AI",
+  "subtitle": "Unlock deep psychological insights",
+  "description": "Analyze interview transcripts to identify defense mechanisms, attachment styles, and emotional trajectories using advanced AI",
+  "instrument": "Clinical Research Tool",
+  "inputLabel": "Transcript Input",
+  "autoDetect": "Auto-detect language",
+  "placeholder": "Paste interview text or upload file...",
+  "uploadButton": "Upload File",
+  "analyzeButton": "Analyze",
+  "history": "History",
+  "search": "Search...",
+  "noAnalyses": "No analyses yet",
+  "features": {
+    "emotionTracking": "Real-time emotion tracking (4-line chart: Anger, Sadness, Happiness, Anxiety)",
+    "export": "PDF & Excel export functionality",
+    "darkMode": "Dark mode with localStorage history",
+    "comparison": "Side-by-side interview comparison",
+    "rating": "5-star rating system",
+    "academicNotes": "Academic research notes generation"
+  },
+  "techStack": "React 18, TypeScript, Tailwind CSS, Google Gemini API, Recharts"
+}
