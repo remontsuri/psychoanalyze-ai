@@ -1,0 +1,14 @@
+{
+  "title": "PsychoAnalyze AI",
+  "subtitle": "Découvrez les insights psychologiques profonds",
+  "description": "Analysez les transcriptions d'entretiens pour identifier les mécanismes de défense, les styles d'attachement et les trajectoires émotionnelles avec l'IA avancée",
+  "instrument": "Outil de recherche clinique",
+  "inputLabel": "Saisie de la transcription",
+  "autoDetect": "Détection automatique de la langue",
+  "placeholder": "Collez le texte d'entretien ou téléchargez un fichier...",
+  "uploadButton": "Télécharger le fichier",
+  "analyzeButton": "Analyser",
+  "history": "Historique",
+  "search": "Rechercher...",
+  "noAnalyses": "Aucune analyse pour le moment"
+}
