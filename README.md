@@ -166,3 +166,6 @@ For questions or issues, please open a [GitHub Issue](https://github.com/remonts
 ---
 
 **Made with ❤️ for psychology professionals and researchers**
+
+
+<!-- Trigger deployment on Vercel -->
