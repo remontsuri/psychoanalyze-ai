@@ -3,7 +3,7 @@ import InputSection from './components/InputSection';
 import Dashboard from './components/Dashboard';
 import ComparisonView from './components/ComparisonView';
 import { AnalysisResult, AnalysisStatus, HistoryItem } from './types';
-import { analyzeTranscript } from './services/geminiService';
+import { analyzeTranscript } from './services/geminiService.ts;
 import { BrainCircuit, AlertCircle, PlusCircle, Moon, Sun, Scale } from 'lucide-react';
 
 const App: React.FC = () => {
