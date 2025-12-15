@@ -1,11 +1,13 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnalysisResult } from "../types";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
+if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY') {
+  console.warn("Google Gemini API key not configured. Using mock data for demonstration.");
+}
 
-
-const genAI = new GoogleGenerativeAI(apiKey);
+const genAI = new GoogleGenerativeAI(apiKey || 'DUMMY_KEY_FOR_BUILD');
 
 function generateMockAnalysis(text: string): AnalysisResult {
   const textLength = text.length;
@@ -77,7 +79,11 @@ function generateMockAnalysis(text: string): AnalysisResult {
 }
 
 export const analyzeTranscript = async (text: string): Promise<AnalysisResult> => {
-
+  // Check if API key is properly configured
+  if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY' || apiKey === 'DUMMY_KEY_FOR_BUILD') {
+    console.info('Using demo mode - configure VITE_GEMINI_API_KEY for real AI analysis');
+    return generateMockAnalysis(text);
+  }
   
   try {
     const prompt = `
