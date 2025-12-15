@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnalysisResult } from "../types";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
+const apiKey = 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
 
 
 
@@ -15,12 +15,12 @@ function generateMockAnalysis(text: string): AnalysisResult {
   return {
     summary: `Анализ текста длиной ${textLength} символов. Выявлены ${hasNegativeWords ? 'признаки эмоционального напряжения' : 'относительно стабильные эмоциональные паттерны'}. ${hasPositiveWords ? 'Присутствуют позитивные эмоциональные маркеры.' : 'Требуется дополнительное внимание к эмоциональному состоянию.'} Для получения полного анализа необходимо настроить API ключ Google Gemini.`,
     language: "Russian",
-    riskLevel: (hasNegativeWords ? "High" : hasPositiveWords ? "Low" : "Medium") as const,
+    riskLevel: hasNegativeWords ? "High" : hasPositiveWords ? "Low" : "Medium",
     defenseMechanisms: [
       {
         name: hasNegativeWords ? "Отрицание" : "Рационализация",
         description: hasNegativeWords ? "Отказ признавать негативные эмоции или ситуации" : "Попытка объяснить поведение логическими причинами",
-        frequency: (hasNegativeWords ? "High" : "Medium") as const,
+        frequency: hasNegativeWords ? "High" : "Medium",
         exampleQuote: text.length > 50 ? `"${text.substring(0, 50)}..."` : `"Пример из текста: ${text.substring(0, 30)}..."`
       }
     ],
