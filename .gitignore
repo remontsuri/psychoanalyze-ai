@@ -83,3 +83,5 @@ desktop.ini
 
 # Vite
 .vite
+.vercel
+.env*.local
