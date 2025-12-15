@@ -5,15 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          charts: ['recharts'],
-          utils: ['html2canvas', 'jspdf', 'xlsx']
-        }
-      }
-    }
+    assetsDir: 'assets',
+    sourcemap: false
   }
 })
