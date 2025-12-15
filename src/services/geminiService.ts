@@ -80,25 +80,26 @@ export const analyzeTranscript = async (text: string): Promise<AnalysisResult> =
 
   
   try {
-    const prompt = `You are an expert clinical psychologist. Analyze this psychological interview transcript.
+    const prompt = `
+      Вы — эксперт-психолог и научный ассистент. Ваша задача — проанализировать предоставленную стенограмму интервью, используя психоаналитические и психодинамические подходы.
+      
+      ВАЖНО: Весь вывод должен быть строго на РУССКОМ ЯЗЫКЕ, независимо от языка оригинала текста.
 
-Respond ONLY with valid JSON:
-{
-  "summary": "Clinical summary",
-  "language": "Detected language",
-  "riskLevel": "Low|Medium|High",
-  "defenseMechanisms": [{"name": "", "description": "", "frequency": "High|Medium|Low", "exampleQuote": ""}],
-  "attachmentProfile": {"style": "Secure|Anxious|Avoidant|Disorganized", "confidence": 0-100, "indicators": []},
-  "emotionalTriggers": [{"trigger": "", "response": "", "intensity": 1-10}],
-  "themes": [{"title": "", "description": "", "relevanceScore": 0-100}],
-  "sentimentTrend": [{"segment": 1-10, "score": -1 to 1, "label": "Positive|Negative|Neutral"}],
-  "emotionTrend": [{"segment": 1-10, "happiness": 0-10, "sadness": 0-10, "anger": 0-10, "anxiety": 0-10}],
-  "therapyRecommendations": [],
-  "keyQuotes": [{"text": "", "category": "", "analysis": ""}],
-  "academicNotes": "Markdown notes"
-}
+      Инструкции:
+      1. Определите язык стенограммы (но вывод делайте на русском).
+      2. Определите уровень психологического риска (Низкий, Средний, Высокий) на основе признаков депрессии, агрессии или диссоциации.
+      3. Определите защитные механизмы (по классификации Вайланта).
+      4. Оцените тип привязанности (Боулби/Эйнсворт).
+      5. Выявите эмоциональные триггеры и реакции.
+      6. Выделите ключевые темы и паттерны.
+      7. Проведите анализ тональности (Sentiment) по 10 сегментам.
+      8. Проведите детальный анализ эмоций (Счастье, Грусть, Гнев, Тревога) по 10 сегментам (шкала 0-10).
+      9. Дайте рекомендации по терапии (Therapy Recommendations) на основе выявленного профиля.
+      10. Выберите ключевые цитаты.
+      11. Создайте структурированные научные заметки (Markdown).
 
-Use Vaillant defense mechanisms, Bowlby attachment theory.`;
+      Результат должен быть валидным JSON объектом.
+    `;
 
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
     
