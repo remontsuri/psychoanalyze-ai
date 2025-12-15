@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnalysisResult } from "../types";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
+const apiKey = (import.meta as any).env.VITE_GEMINI_API_KEY || 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
 
 if (!apiKey) {
   console.error("VITE_GEMINI_API_KEY is not set");
