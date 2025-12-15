@@ -1,0 +1,7 @@
+{
+  "enableFullAccess": true,
+  "autoInstallDependencies": true,
+  "enableGitOperations": true,
+  "enableDeployment": true,
+  "defaultBranch": "main"
+}

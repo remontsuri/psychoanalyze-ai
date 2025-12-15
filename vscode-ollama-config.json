@@ -1,0 +1,18 @@
+{
+  "ollama.baseUrl": "http://localhost:11434",
+  "ollama.models": [
+    {
+      "name": "qwen2.5-coder:7b",
+      "displayName": "Qwen2.5 Coder 7B",
+      "description": "Code generation and analysis"
+    },
+    {
+      "name": "qwen2.5-coder:1.5b",
+      "displayName": "Qwen2.5 Coder 1.5B",
+      "description": "Lightweight coding assistant"
+    }
+  ],
+  "ollama.defaultModel": "qwen2.5-coder:7b",
+  "ollama.requestTimeout": 30000,
+  "ollama.maxTokens": 4096
+}

@@ -1,0 +1,12 @@
+{
+  "workspaceSettings": {
+    "checkpointsDir": "C:\\Users\\vladc\\.continue\\checkpoints",
+    "indexDir": "C:\\Users\\vladc\\.continue\\index",
+    "logsDir": "C:\\Users\\vladc\\.continue\\logs",
+    "sessionsDir": "C:\\Users\\vladc\\.continue\\sessions"
+  },
+  "disableCheckpoints": true,
+  "disableIndexing": false,
+  "maxTokens": 4096,
+  "temperature": 0.1
+}

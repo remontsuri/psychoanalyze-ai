@@ -1,0 +1,5 @@
+@echo off
+set OLLAMA_NUM_PARALLEL=4
+set OLLAMA_CONTEXT_LENGTH=2048
+set OLLAMA_FLASH_ATTENTION=true
+ollama serve

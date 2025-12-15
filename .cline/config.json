@@ -1,0 +1,22 @@
+{
+  "workspaceRoot": "c:\\Users\\vladc\\Desktop\\ai site\\psychoanalyze-ai",
+  "projectType": "react-typescript",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "packageManager": "npm",
+  "framework": "vite",
+  "features": {
+    "fileOperations": true,
+    "codeGeneration": true,
+    "debugging": true,
+    "testing": true,
+    "deployment": true
+  },
+  "permissions": {
+    "readFiles": true,
+    "writeFiles": true,
+    "executeCommands": true,
+    "installPackages": true,
+    "modifyConfig": true
+  }
+}
