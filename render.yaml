@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: psychoanalyze-ai
+    env: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: OLLAMA_HOST
+        value: localhost:11434
+    healthCheckPath: /

@@ -1,0 +1,8 @@
+[phases.build]
+cmds = ["npm run build"]
+
+[phases.start]
+cmd = "npm run preview"
+
+[variables]
+NODE_VERSION = "18"
