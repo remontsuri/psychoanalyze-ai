@@ -1,8 +1,12 @@
+[phases.setup]
+cmds = ["npm install"]
+
 [phases.build]
 cmds = ["npm run build"]
 
 [phases.start]
-cmd = "npm run preview"
+cmd = "npm run start"
 
 [variables]
 NODE_VERSION = "18"
+PORT = "3000"
