@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnalysisResult } from "../types";
+import { analyzeWithOllama } from "./ollamaService";
 
 const apiKey = (import.meta as any).env.VITE_GEMINI_API_KEY;
 
@@ -79,6 +80,13 @@ function generateMockAnalysis(text: string): AnalysisResult {
 }
 
 export const analyzeTranscript = async (text: string): Promise<AnalysisResult> => {
+  // Try Ollama first
+  try {
+    return await analyzeWithOllama(text);
+  } catch (ollamaError) {
+    console.log("Ollama failed, trying Gemini:", ollamaError);
+  }
+
   // Check if API key is properly configured
   if (!apiKey || apiKey === 'PLACEHOLDER_API_KEY' || apiKey === 'DUMMY_KEY_FOR_BUILD') {
     console.info('Using demo mode - configure VITE_GEMINI_API_KEY for real AI analysis');
