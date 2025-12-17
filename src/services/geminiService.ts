@@ -2,11 +2,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { AnalysisResult } from "../types";
 import { analyzeWithOllama } from "./ollamaService";
 
-const apiKey = 'AIzaSyCGIu8UW3k-S5jpqZXTHtcp4h9erDLDuHI';
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
-
-const genAI = new GoogleGenerativeAI(apiKey);
+if (!apiKey) {
+  console.warn('VITE_GEMINI_API_KEY не найден. Используется демонстрационный режим.');
+}
 
 function generateMockAnalysis(text: string): AnalysisResult {
   const textLength = text.length;
@@ -78,15 +80,31 @@ function generateMockAnalysis(text: string): AnalysisResult {
 }
 
 export const analyzeTranscript = async (text: string): Promise<AnalysisResult> => {
+  // Validate input
+  if (!text || text.trim().length === 0) {
+    throw new Error('Текст для анализа не может быть пустым');
+  }
+
+  if (text.length > 100000) {
+    throw new Error('Текст слишком длинный для анализа. Максимальная длина - 100,000 символов');
+  }
+
   // Try Ollama first
   try {
+    console.log('Attempting Ollama analysis...');
     return await analyzeWithOllama(text);
   } catch (ollamaError) {
     console.log("Ollama failed, trying Gemini:", ollamaError);
   }
 
-  
+  // Check Gemini API availability
+  if (!genAI) {
+    console.warn('Gemini API не доступен. Используется демонстрационный режим.');
+    return generateMockAnalysis(text);
+  }
+
   try {
+    console.log('Attempting Gemini analysis...');
     const prompt = `
       Вы — эксперт-психолог и научный ассистент. Ваша задача — проанализировать предоставленную стенограмму интервью, используя психоаналитические и психодинамические подходы.
       
@@ -114,12 +132,22 @@ export const analyzeTranscript = async (text: string): Promise<AnalysisResult> =
 
     const jsonText = response.response.text();
     if (!jsonText) {
-      throw new Error("No response from AI");
+      throw new Error("Пустой ответ от ИИ");
     }
-    
-    return JSON.parse(jsonText) as AnalysisResult;
+
+    // Try to parse JSON with better error handling
+    try {
+      const parsed = JSON.parse(jsonText);
+      return parsed as AnalysisResult;
+    } catch (parseError) {
+      console.error('JSON parsing failed:', parseError);
+      throw new Error('Не удалось разобрать ответ ИИ. Попробуйте еще раз.');
+    }
   } catch (error) {
-    console.error("Analysis failed:", error);
+    console.error("Gemini analysis failed:", error);
+    
+    // Return mock analysis as fallback
+    console.warn('Используется демонстрационный режим из-за ошибки анализа.');
     return generateMockAnalysis(text);
   }
 };

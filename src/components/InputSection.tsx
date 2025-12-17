@@ -22,24 +22,71 @@ const InputSection: React.FC<InputSectionProps> = ({
   const [text, setText] = useState('');
   const [fileName, setFileName] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  const SUPPORTED_TYPES = ['text/plain', 'text/markdown', 'text/csv', 'application/json'];
+
+  const validateFile = (file: File): string | null => {
+    if (file.size > MAX_FILE_SIZE) {
+      return `Размер файла превышает ${MAX_FILE_SIZE / 1024 / 1024}MB`;
+    }
+    
+    if (!SUPPORTED_TYPES.includes(file.type) && !file.name.match(/\.(txt|md|csv|json)$/i)) {
+      return 'Неподдерживаемый тип файла. Разрешены: .txt, .md, .csv, .json';
+    }
+    
+    return null;
+  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const content = e.target?.result as string;
-        setText(content);
-      };
-      reader.readAsText(file);
+    setFileError(null);
+    
+    if (!file) return;
+
+    const validationError = validateFile(file);
+    if (validationError) {
+      setFileError(validationError);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
     }
+
+    setFileName(file.name);
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        if (!content || content.trim().length === 0) {
+          setFileError('Файл пустой или содержит только пробельные символы');
+          setFileName(null);
+          return;
+        }
+        setText(content);
+        setFileError(null);
+      } catch (error) {
+        console.error('Error reading file:', error);
+        setFileError('Ошибка при чтении файла');
+        setFileName(null);
+      }
+    };
+    
+    reader.onerror = () => {
+      setFileError('Ошибка при чтении файла');
+      setFileName(null);
+    };
+    
+    reader.readAsText(file);
   };
 
   const handleClear = () => {
     setText('');
     setFileName(null);
+    setFileError(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -87,6 +134,20 @@ const InputSection: React.FC<InputSectionProps> = ({
               </button>
             )}
           </div>
+
+          {/* File Error Display */}
+          {fileError && (
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-700 dark:text-red-300">
+              <X className="w-4 h-4 flex-shrink-0" />
+              <span className="text-sm font-medium">{fileError}</span>
+              <button 
+                onClick={() => setFileError(null)}
+                className="ml-auto text-red-500 hover:text-red-700 dark:hover:text-red-300"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
           <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3 w-full sm:w-auto">
